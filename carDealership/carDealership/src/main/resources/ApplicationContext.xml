@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- bean definitions here -->
+    <!-- Family Car varients -->
+    <bean id="familyCarWithNormalTyre" class="com.car.dealership.carDealership.FamilyCar">
+    	<constructor-arg ref="normalTyre"></constructor-arg>
+    </bean>
+    <bean id="familyCarWithSportsTyre" class="com.car.dealership.carDealership.FamilyCar">
+    	<constructor-arg ref="sportsTyre"></constructor-arg>
+    </bean>
+    <bean id="familyCarWithHeavyTyre" class="com.car.dealership.carDealership.FamilyCar">
+    	<constructor-arg ref="heavyTyre"></constructor-arg>
+    </bean>
+    
+    
+    <bean id="sportsCarWithNormalTyre" class="com.car.dealership.carDealership.SportsCar">
+    	<property name="tyre" ref="normalTyre"></property>
+    </bean>
+    <bean id="sportsCarWithSportsTyre" class="com.car.dealership.carDealership.SportsCar">
+        <property name="tyre" ref="sportsTyre"></property>
+    </bean>
+    <bean id="sportsCarWithHeavyTyre" class="com.car.dealership.carDealership.SportsCar">
+        <property name="tyre" ref="heavyTyre"></property>
+    </bean>
+
+
+    <bean id="truckWithNormalTyre" class="com.car.dealership.carDealership.Truck">
+        <property name="tyre" ref="normalTyre"></property>
+    </bean>
+    <bean id="truckWithSportsTyre" class="com.car.dealership.carDealership.Truck">
+        <property name="tyre" ref="sportsTyre"></property>
+    </bean>
+    <bean id="truckWithHeavyTyre" class="com.car.dealership.carDealership.Truck">
+        <property name="tyre" ref="heavyTyre"></property>
+    </bean>
+
+	
+	<bean id="normalTyre" class="com.car.dealership.carDealership.NormalTyre"></bean>
+	<bean id="heavyTyre" class="com.car.dealership.carDealership.HeavyTyre"></bean>
+	<bean id="sportsTyre" class="com.car.dealership.carDealership.SportsTyre"></bean>
+</beans>
