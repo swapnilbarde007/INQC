@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util" xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/util http://www.springframeworkSimplePostList.org/schema/util/spring-util.xsd"> <!-- bean definitions here -->
+    <bean id="simplePostList" class="com.social.media.SocialMediaDemo.SimplePostList" scope="singleton"></bean>
+    <bean id="simplePost" class="com.social.media.SocialMediaDemo.SimplePost" scope="prototype"></bean>
+    <bean id="user" class="com.social.media.SocialMediaDemo.UserImpl" scope="singleton">
+        <property name="postList" ref="simplePostList"></property>
+    </bean>
+
+</beans>
