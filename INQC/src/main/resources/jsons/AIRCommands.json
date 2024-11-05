@@ -1,0 +1,126 @@
+{
+	"methodList": [
+		{
+			"methodName": "DeleteSubscriber"
+		},
+		{
+			"methodName": "UpdateOffer",
+			"methodStructList": [
+				{
+					"mandatoryInput": "Y",
+					"memberName": "originNodeType",
+					"memberValue": "EXT",
+					"memberDataType": "string",
+					"possibleValues": [],
+					"allowedNulls": "N"
+				},
+				{
+					"mandatoryInput": "Y",
+					"memberName": "originHostName",
+					"memberValue": "meydvvmnmt02menalabcorplocal",
+					"memberDataType": "string",
+					"possibleValues": [],
+					"allowedNulls": "N"
+				},
+				{
+					"mandatoryInput": "Y",
+					"memberName": "originTransactionID",
+					"memberValue": "2020092316562490",
+					"memberDataType": "string",
+					"possibleValues": [],
+					"allowedNulls": "N"
+				},
+				{
+					"mandatoryInput": "Y",
+					"memberName": "originTimeStamp",
+					"memberValue": "2024-11-02T16:10:50.910+05:30",
+					"memberDataType": "dateTime.iso8601",
+					"possibleValues": [],
+					"allowedNulls": "N"
+				},
+				{
+					"mandatoryInput": "Y",
+					"memberName": "subscriberNumberNAI",
+					"memberValue": "1",
+					"memberDataType": "int",
+					"possibleValues": [],
+					"allowedNulls": "N"
+				},
+				{
+					"mandatoryInput": "Y",
+					"memberName": "subscriberNumber",
+					"memberValue": "971553205721",
+					"memberDataType": "string",
+					"possibleValues": [],
+					"allowedNulls": "N"
+				},
+				{
+					"mandatoryInput": "Y",
+					"memberName": "offerID",
+					"memberValue": "100",
+					"memberDataType": "int",
+					"possibleValues": [],
+					"allowedNulls": "N"
+				},
+				{
+					"mandatoryInput": "Y",
+					"memberName": "offerType",
+					"memberValue": "2",
+					"memberDataType": "int",
+					"possibleValues": [],
+					"allowedNulls": "N"
+				},
+				{
+					"memberName": "attributeUpdateInformationList",
+					"mandatoryInput": "N",
+					"memberDataType": "array",
+					"possibleValues": [],
+					"allowedNulls": "N",
+					"methodStructList": [
+						{
+							"mandatoryInput": "Y",
+							"memberName": "attributeName",
+							"memberValue": "CommitmentBundle",
+							"memberDataType": "string",
+							"possibleValues": [],
+							"allowedNulls": "N"
+						},
+						{
+							"memberName": "attributeUpdateAction",
+							"memberValue": "SET",
+							"mandatoryInput": "Y",
+							"memberDataType": "string",
+							"possibleValues": [],
+							"allowedNulls": "N"
+						},
+						{
+							"memberName": "attributeValueString",
+							"memberValue": "AllStarV1D1Annual",
+							"mandatoryInput": "Y",
+							"memberDataType": "string",
+							"possibleValues": [],
+							"allowedNulls": "N"
+						}
+					]
+				},
+				{
+					"mandatoryInput": "Y",
+					"memberName": "negotiatedCapabilities",
+					"memberDataType": "array",
+					"possibleValues": [],
+					"allowedNulls": "N",
+					"methodStructList": [
+						{
+							"mandatoryInput": "Y",
+							"memberName": null,
+							"memberValue": "268763332",
+							"memberDataType": "int",
+							"possibleValues": [],
+							"allowedNulls": "N"
+						}
+					]
+				}
+			]
+		}
+	]
+}
