@@ -3,6 +3,7 @@ package com.INQC.Controller;
 import com.INQC.Entity.Commands.AIRCommands;
 import com.INQC.Entity.Commands.Method;
 import com.INQC.Service.AIRCommandsService;
+import jakarta.xml.bind.JAXBException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.ObjectUtils;
@@ -22,7 +23,22 @@ public class AIRCommandsController {
 
     @PostMapping("/saveMethodTemplate")
     @ResponseStatus(HttpStatus.OK)
-    public boolean saveMethodAsTemplate(Method method){
+    public boolean saveMethodAsTemplate(@RequestBody Method method){
+        airCommandsService.saveMethodTemplate(method);
         return true;
     }
+
+
+    @GetMapping("/getMethodTempByName/{templateName}")
+    @ResponseStatus(HttpStatus.OK)
+    public Method getAIRMethodTemplateByName(@PathVariable String templateName){
+        return airCommandsService.getMethodTemplateByName(templateName);
+    }
+
+    @PostMapping("/executeMethodByTemplateName/{templateName}")
+    @ResponseStatus(HttpStatus.OK)
+    public void executeMethodByTemplateName(@PathVariable String templateName) throws JAXBException {
+        airCommandsService.executeByMethodTemplateName(templateName);
+    }
+
 }

@@ -1,17 +1,21 @@
 spring:
   application:
     name: INQC
-  datasource:
-    url: "jdbc:mysql://localhost:3306/INQC?createDatabaseIfNotExist=true"
-    username: test
-    password: test
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQLDialect
-    hibernate:
-      ddl-auto: update
+#  datasource:
+#    url: "jdbc:mysql://localhost:3306/INQC?createDatabaseIfNotExist=true"
+#    username: test
+#    password: test
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#  jpa:
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.MySQLDialect
+#    hibernate:
+#      ddl-auto: update
+
+  data:
+    mongodb:
+      uri: "mongodb://localhost:27017/INQC"
 server:
   port: 8081
 

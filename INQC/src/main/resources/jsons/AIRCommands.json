@@ -73,7 +73,7 @@
 				{
 					"memberName": "attributeUpdateInformationList",
 					"mandatoryInput": "N",
-					"memberDataType": "array",
+					"memberDataType": "arrayStruct",
 					"possibleValues": [],
 					"allowedNulls": "N",
 					"methodStructList": [

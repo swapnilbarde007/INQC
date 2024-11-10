@@ -2,56 +2,64 @@ package com.INQC.Entity.Commands;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
+import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "method_struct")
+//@Entity
+//@Table(name = "method_struct")
+@Document(collection = "method_struct")
 public class MethodStruct {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    String id;
 
-    @Column
+//    @Column
     String memberName;
 
 
-    @Column
+//    @Column
     String memberValue;
 
-    @Column
+//    @Column
     String memberDataType;
 
-    @Column
-    List<String> possibleValues;
+//    @Column
+    List<String> possibleValues=new ArrayList<>();
 
-    @Column
+//    @Column
     char allowedNulls;
 
-    @Column
+//    @Column
     char mandatoryInput;
 
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "methodStruct")
-    List<MethodStruct> methodStructList;
+//    @OneToMany(cascade = CascadeType.ALL,mappedBy = "methodStruct")
+//    @JsonManagedReference
+    List<MethodStruct> methodStructList=new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name = "method_struct_id")
-    MethodStruct methodStruct;
+//    @ManyToOne
+//    @JoinColumn(name = "method_struct_id")
+//    @JsonBackReference
+//    MethodStruct methodStruct;
 
     //Done
-    @ManyToOne
-    @JoinColumn(name = "method_id")
-    @JsonBackReference
-    Method method;
+//    @ManyToOne
+//    @JoinColumn(name = "method_id")
+//    @JsonBackReference
+//    Method method;
+
+//    public void addMethodStructInternal(MethodStruct methodStruct) {
+//        methodStructList.add(methodStruct);
+//       methodStruct.setMethodStruct(this);// Set the bidirectional reference
+//    }
 
 }
