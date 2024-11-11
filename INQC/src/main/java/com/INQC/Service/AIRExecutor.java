@@ -194,136 +194,39 @@ public class AIRExecutor {
 
         try {
             // Step 1: Connect to the SSH server
-            JSch jsch = new JSch();
-            Session session = jsch.getSession(sshUsername, sshHost, 22);
-            session.setPassword(sshPassword);
-            session.setConfig("StrictHostKeyChecking", "no");
-            session.connect();
-
-            // Step 2: Forward a local port to the remote Telnet port
-            session.setPortForwardingL(localPort, "localhost", telnetPort);
+//            JSch jsch = new JSch();
+//            Session session = jsch.getSession(sshUsername, sshHost, 22);
+//            session.setPassword(sshPassword);
+//            session.setConfig("StrictHostKeyChecking", "no");
+//            session.connect();
+//
+//            // Step 2: Forward a local port to the remote Telnet port
+//            session.setPortForwardingL(localPort, "localhost", telnetPort);
 
             // Step 3: Connect to the Telnet server through the forwarded port
-            TelnetClient telnet = new TelnetClient();
-            telnet.connect("localhost", localPort);
+            JSCHSession jschSession=JSCHSession.getJschSession();
+            TelnetClient telnet = jschSession.getTelnetClient();
+            //telnet.connect("localhost", localPort);
+
+
+
 
             InputStream telnetIn = telnet.getInputStream();
             OutputStream telnetOut = telnet.getOutputStream();
 
-//            xmlInput="POST /Air HTTP/1.1\n" +
-//                    "Content-Length: 2306\n" +
-//                    "Content-Type: text/xml\n" +
-//                    "User-Agent: UGw Server/5.0/1.0\n" +
-//                    "Host: 10.95.214.166:10011\n" +
-//                    "Authorization: Basic ZWFpOmVhaUAxMjM=\n" +
-//                    "\n" +
-//                    "<?xml version=\"1.0\" encoding=\"iso-8859-1\"?>\n" +
-//                    "<methodCall>\n" +
-//                    "\t<methodName>UpdateOffer</methodName>\n" +
-//                    "\t<params>\n" +
-//                    "\t\t<param>\n" +
-//                    "\t\t\t<value>\n" +
-//                    "\t\t\t\t<struct>\n" +
-//                    "\t\t\t\t\t<member>\n" +
-//                    "\t\t\t\t\t\t<name>originNodeType</name>\n" +
-//                    "\t\t\t\t\t\t<value>\n" +
-//                    "\t\t\t\t\t\t\t<string>EXT</string>\n" +
-//                    "\t\t\t\t\t\t</value>\n" +
-//                    "\t\t\t\t\t</member>\n" +
-//                    "\t\t\t\t\t<member>\n" +
-//                    "\t\t\t\t\t\t<name>originHostName</name>\n" +
-//                    "\t\t\t\t\t\t<value>\n" +
-//                    "\t\t\t\t\t\t\t<string>meydvvmnmt02menalabcorplocal</string>\n" +
-//                    "\t\t\t\t\t\t</value>\n" +
-//                    "\t\t\t\t\t</member>\n" +
-//                    "\t\t\t\t\t<member>\n" +
-//                    "\t\t\t\t\t\t<name>originTransactionID</name>\n" +
-//                    "\t\t\t\t\t\t<value>\n" +
-//                    "\t\t\t\t\t\t\t<string>2020092316562490</string>\n" +
-//                    "\t\t\t\t\t\t</value>\n" +
-//                    "\t\t\t\t\t</member>\n" +
-//                    "\t\t\t\t\t<member>\n" +
-//                    "\t\t\t\t\t\t<name>originTimeStamp</name>\n" +
-//                    "\t\t\t\t\t\t<value>\n" +
-//                    "\t\t\t\t\t\t\t<dateTime.iso8601>20200923T16:56:24+0400</dateTime.iso8601>\n" +
-//                    "\t\t\t\t\t\t</value>\n" +
-//                    "\t\t\t\t\t</member>\n" +
-//                    "\t\t\t\t\t<member>\n" +
-//                    "\t\t\t\t\t\t<name>subscriberNumberNAI</name>\n" +
-//                    "\t\t\t\t\t\t<value>\n" +
-//                    "\t\t\t\t\t\t\t<int>1</int>\n" +
-//                    "\t\t\t\t\t\t</value>\n" +
-//                    "\t\t\t\t\t</member>\n" +
-//                    "\t\t\t\t\t<member>\n" +
-//                    "\t\t\t\t\t\t<name>negotiatedCapabilities</name>\n" +
-//                    "\t\t\t\t\t\t<value>\n" +
-//                    "\t\t\t\t\t\t\t<array>\n" +
-//                    "\t\t\t\t\t\t\t\t<data>\n" +
-//                    "\t\t\t\t\t\t\t\t\t<value>\n" +
-//                    "\t\t\t\t\t\t\t\t\t\t<int>268763332</int>\n" +
-//                    "\t\t\t\t\t\t\t\t\t</value>\n" +
-//                    "\t\t\t\t\t\t\t\t</data>\n" +
-//                    "\t\t\t\t\t\t\t</array>\n" +
-//                    "\t\t\t\t\t\t</value>\n" +
-//                    "\t\t\t\t\t</member>\n" +
-//                    "\t\t\t\t\t<member>\n" +
-//                    "\t\t\t\t\t\t<name>subscriberNumber</name>\n" +
-//                    "\t\t\t\t\t\t<value>\n" +
-//                    "\t\t\t\t\t\t\t<string>971553205721</string>\n" +
-//                    "\t\t\t\t\t\t</value>\n" +
-//                    "\t\t\t\t\t</member>\n" +
-//                    "\t\t\t\t\t<member>\n" +
-//                    "\t\t\t\t\t\t<name>offerID</name>\n" +
-//                    "\t\t\t\t\t\t<value>\n" +
-//                    "\t\t\t\t\t\t\t<int>100</int>\n" +
-//                    "\t\t\t\t\t\t</value>\n" +
-//                    "\t\t\t\t\t</member>\n" +
-//                    "\t\t\t\t\t<member>\n" +
-//                    "\t\t\t\t\t\t<name>offerType</name>\n" +
-//                    "\t\t\t\t\t\t<value>\n" +
-//                    "\t\t\t\t\t\t\t<int>2</int>\n" +
-//                    "\t\t\t\t\t\t</value>\n" +
-//                    "\t\t\t\t\t</member>\n" +
-//                    "\t\t\t\t\t<member>\n" +
-//                    "\t\t\t\t\t\t<name>attributeUpdateInformationList</name>\n" +
-//                    "\t\t\t\t\t\t<value>\n" +
-//                    "\t\t\t\t\t\t\t<array>\n" +
-//                    "\t\t\t\t\t\t\t\t<data>\n" +
-//                    "\t\t\t\t\t\t\t\t\t<value>\n" +
-//                    "\t\t\t\t\t\t\t\t\t\t<struct>\n" +
-//                    "\t\t\t\t\t\t\t\t\t\t\t<member>\n" +
-//                    "\t\t\t\t\t\t\t\t\t\t\t\t<name>attributeName</name>\n" +
-//                    "\t\t\t\t\t\t\t\t\t\t\t\t<value>\n" +
-//                    "\t\t\t\t\t\t\t\t\t\t\t\t\t<string>CommitmentBundle</string>\n" +
-//                    "\t\t\t\t\t\t\t\t\t\t\t\t</value>\n" +
-//                    "\t\t\t\t\t\t\t\t\t\t\t</member>\n" +
-//                    "\t\t\t\t\t\t\t\t\t\t\t<member>\n" +
-//                    "\t\t\t\t\t\t\t\t\t\t\t\t<name>attributeUpdateAction</name>\n" +
-//                    "\t\t\t\t\t\t\t\t\t\t\t\t<value>\n" +
-//                    "\t\t\t\t\t\t\t\t\t\t\t\t\t<string>SET</string>\n" +
-//                    "\t\t\t\t\t\t\t\t\t\t\t\t</value>\n" +
-//                    "\t\t\t\t\t\t\t\t\t\t\t</member>\n" +
-//                    "\t\t\t\t\t\t\t\t\t\t\t<member>\n" +
-//                    "\t\t\t\t\t\t\t\t\t\t\t\t<name>attributeValueString</name>\n" +
-//                    "\t\t\t\t\t\t\t\t\t\t\t\t<value>\n" +
-//                    "\t\t\t\t\t\t\t\t\t\t\t\t\t<string>AllStarV1D1Annual</string>\n" +
-//                    "\t\t\t\t\t\t\t\t\t\t\t\t</value>\n" +
-//                    "\t\t\t\t\t\t\t\t\t\t\t</member>\n" +
-//                    "\t\t\t\t\t\t\t\t\t\t</struct>\n" +
-//                    "\t\t\t\t\t\t\t\t\t</value>\n" +
-//                    "\t\t\t\t\t\t\t\t</data>\n" +
-//                    "\t\t\t\t\t\t\t</array>\n" +
-//                    "\t\t\t\t\t\t</value>\n" +
-//                    "\t\t\t\t\t</member>\n" +
-//                    "\t\t\t\t</struct>\n" +
-//                    "\t\t\t</value>\n" +
-//                    "\t\t</param>\n" +
-//                    "\t</params>\n" +
-//                    "</methodCall>";
+
 
             PrintWriter writer = new PrintWriter(telnetOut, true, StandardCharsets.UTF_8);
             writer.println(xmlInput);
             writer.flush();
+
+
+            // Step 4: Read response from Telnet server
+//            byte[] buffer1 = new byte[1024];
+//            int bytesRead1;
+//            while ((bytesRead1 = telnetIn.read(buffer1)) != -1) {
+//                System.out.println(new String(buffer1, 0, bytesRead1, StandardCharsets.UTF_8));
+//            }
 
             // Step 4: Read response from Telnet server
             byte[] buffer = new byte[1024];
@@ -360,7 +263,7 @@ public class AIRExecutor {
 
             // Step 5: Close connections
             telnet.disconnect();
-            session.disconnect();
+            jschSession.getSession().disconnect();
 //            System.out.println("XML BELOW");
 //            System.out.println(xmlInput);
 //            System.out.println("XML ABOVE");
