@@ -36,8 +36,8 @@ public class AIRExecutor {
         this.methodCall = buildUCIP(method);
         String xmlString=formatUCIPXML();
         System.out.println("Generated XML:\n" + xmlString);
-        System.out.println("Executing UCIP on AIR");
-        //test(xmlString);
+        //System.out.println("Executing UCIP on AIR");
+        test(xmlString);
 
     }
 
