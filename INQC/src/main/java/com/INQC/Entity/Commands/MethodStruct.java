@@ -46,6 +46,7 @@ public class MethodStruct {
 //    @JsonManagedReference
     List<MethodStruct> methodStructList=new ArrayList<>();
 
+    //List<List<MethodStruct>> nestedMethodStructList= new ArrayList<>();
 //    @ManyToOne
 //    @JoinColumn(name = "method_struct_id")
 //    @JsonBackReference

@@ -3,6 +3,9 @@ package com.INQC.Service;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.Session;
 import org.apache.commons.net.telnet.TelnetClient;
+import org.springframework.util.ObjectUtils;
+
+import java.io.IOException;
 
 public class JSCHSession {
 
@@ -11,6 +14,12 @@ public class JSCHSession {
     private  TelnetClient telnetClient;
 
     private Session session;
+
+    String sshHost = "10.95.214.166";
+    String sshUsername = "cakhpdgo";
+    String sshPassword = "Dubai@1234";
+    int telnetPort = 10011;         // Remote Telnet port on SSH server
+    int localPort = 9999;           // Local port for SSH forwarding
 
     public TelnetClient getTelnetClient() {
         return telnetClient;
@@ -36,12 +45,23 @@ public class JSCHSession {
         return jschSession;
     }
 
+    public  void destroyTelnet() throws IOException {
+        telnetClient.disconnect();
+    }
+
+    public void createTelnetClient() throws IOException {
+        if(ObjectUtils.isEmpty(telnetClient)){
+            this.telnetClient=new TelnetClient();
+            telnetClient.connect("localhost", localPort);
+        }
+    }
+
+    public void destroyJsch(){
+        jschSession.getSession().disconnect();
+    }
+
     public void initJSCHSession(){
-        String sshHost = "10.95.214.166";
-        String sshUsername = "cakhpdgo";
-        String sshPassword = "Dubai@1234";
-        int telnetPort = 10011;         // Remote Telnet port on SSH server
-        int localPort = 9999;           // Local port for SSH forwarding
+
 
         try {
             // Step 1: Connect to the SSH server
@@ -55,8 +75,7 @@ public class JSCHSession {
             session.setPortForwardingL(localPort, "localhost", telnetPort);
 
             // Step 3: Connect to the Telnet server through the forwarded port
-            telnetClient = new TelnetClient();
-            telnetClient.connect("localhost", localPort);
+            createTelnetClient();
         }catch (Exception e) {
             e.printStackTrace();
         }

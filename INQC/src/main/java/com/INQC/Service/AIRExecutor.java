@@ -24,8 +24,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.function.Function;
-import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 @Service
 public class AIRExecutor {
@@ -37,9 +35,9 @@ public class AIRExecutor {
         this.methodCall=new MethodCall();
         this.methodCall = buildUCIP(method);
         String xmlString=formatUCIPXML();
-        //System.out.println("Generated XML:\n" + xmlString);
+        System.out.println("Generated XML:\n" + xmlString);
         System.out.println("Executing UCIP on AIR");
-        test(xmlString);
+        //test(xmlString);
 
     }
 
@@ -163,6 +161,53 @@ public class AIRExecutor {
                 array101.setData(innerListOfData);
                 newMemberValue.setArray(array101);
             }
+            if (methodStruct.getMemberDataType().equals("nestedArrayStruct")){
+                Array array1=new Array();
+                List<Data> dataList1=new ArrayList<>();
+
+                //For each data
+                methodStruct.getMethodStructList().stream().forEach(
+                        (pamXid)->{
+                            Data datax=new Data();
+                            MemberValue mv1=new MemberValue();
+                            Struct innerStruct=new Struct();
+                            //For Each Item of One Data
+                            List<Member> listOfMember=new ArrayList<>();
+                            pamXid.getMethodStructList().stream().forEach(
+                                    (pamXInputs)->{
+                                        Member memb1=new Member();
+                                        MemberValue mvin101=new MemberValue();
+                                        memb1.setName(pamXInputs.getMemberName());
+                                        if (pamXInputs.getMemberDataType().equals("int")) {
+                                            mvin101.setIntValue(Integer.parseInt(pamXInputs.getMemberValue()));
+                                        }
+
+                                        if (pamXInputs.getMemberDataType().equals("string")) {
+                                            mvin101.setStringValue(pamXInputs.getMemberValue());
+                                        }
+
+
+                                        if (pamXInputs.getMemberDataType().equals("dateTime.iso8601")) {
+                                            ZonedDateTime zonedDateTime = ZonedDateTime.parse(pamXInputs.getMemberValue(), DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+                                            Instant instant = zonedDateTime.toInstant();
+                                            Date date = Date.from(instant);
+                                            mvin101.setDateTime(date);
+                                        }
+                                        memb1.setValue(mvin101);
+                                        listOfMember.add(memb1);
+                                    }
+                            );
+
+                            innerStruct.setMembers(listOfMember);
+                            mv1.setStruct(innerStruct);
+                            datax.setValue(mv1);
+                            dataList1.add(datax);
+                        }
+                );
+
+                array1.setData(dataList1);
+                newMemberValue.setArray(array1);
+            }
 
             newMember.setValue(newMemberValue);
             return newMember;
@@ -207,8 +252,6 @@ public class AIRExecutor {
             JSCHSession jschSession=JSCHSession.getJschSession();
             TelnetClient telnet = jschSession.getTelnetClient();
             //telnet.connect("localhost", localPort);
-
-
 
 
             InputStream telnetIn = telnet.getInputStream();
@@ -262,8 +305,11 @@ public class AIRExecutor {
 
 
             // Step 5: Close connections
-            telnet.disconnect();
-            jschSession.getSession().disconnect();
+            jschSession.destroyTelnet();
+//            telnet.disconnect();
+//            jschSession.getSession().disconnect();
+
+
 //            System.out.println("XML BELOW");
 //            System.out.println(xmlInput);
 //            System.out.println("XML ABOVE");
